@@ -5,10 +5,31 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
+const cors = require("cors");
 
 const prisma = new PrismaClient();
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Enable CORS before defining routes
+app.use(
+  cors({
+    origin: [
+      "https://imf-gadget-api-zy90.onrender.com",
+      "http://localhost:3000",
+    ],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// Add security headers
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 app.use(express.json());
 
@@ -19,9 +40,17 @@ const swaggerOptions = {
     info: {
       title: "IMF Gadget API",
       version: "1.0.0",
-      description: "API for managing IMF gadgets",
     },
-    servers: [{ url: `http://localhost:${port}` }],
+    servers: [
+      {
+        url: "https://imf-gadget-api-zy90.onrender.com",
+        description: "Production server",
+      },
+      {
+        url: "http://localhost:3000",
+        description: "Local development server",
+      },
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
