@@ -13,7 +13,7 @@
 
 ## Live Documentation
 
-### [🔗 Swagger UI](https://imf-gadget-api-zy90.onrender.com/api-docs/) - Hosted the backend on Render
+### [🔗 Swagger UI](https://imf-gadget-api-zy90.onrender.com/api-docs/) - Hosted the backend on Render (wait for ~1 min for the site to load)
 
 ## 🌟 Key Features
 
